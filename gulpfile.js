@@ -3,16 +3,24 @@
  */
 const gulp=require("gulp");
 const browserSync=require("browser-sync").create();
-const reload=browserSync.reload;
 
 gulp.task("serve",function () {
-    let files=["./**/*"];
     browserSync.init({
-        files:files,
-        proxy:"http://localhost:3000/"
+        port:2017,
+        server:{
+            baseDir:["."]
+        }
     });
-    gulp.on("change",reload);
+    gulp.watch("*.html",["html"]);
 });
+
+//操作html文件
+gulp.task("html",function () {
+    gulp.src("*.html")
+        .pipe(browserSync.stream());
+});
+
+
 gulp.task("default",["serve"]);
 
 
